@@ -35,46 +35,54 @@
 #include <ostream>
 #include <string>
 using namespace std;
-int main(int argc, char *argv[]) {
-  // Open the input file named "input.txt"
-  ifstream inputFile("santa.txt");
-  // Check if the file is successfully opened
-  if (!inputFile.is_open()) {
-    cerr << "There was an error opening the file" << endl;
-    return 1;
-  }
 
-  // Declare a string variable to store each
-  // line of the file
-  string line;
-  long long floor = 0;
-  long long openCount = 0, closeCount = 0;
+class part1 {
+public:
+  void processFile(const string &filename) {
 
-  // Read each line of the file and print it to the
-  // standard output stream
-  cout << "File content:" << endl;
-  while (getline(inputFile, line)) {
-    cout << line << endl;
-    for (char c : line) {
-      if (c == '(') {
-        floor++;
-        openCount++;
-        if (floor > numeric_limits<int>::max()) {
-          cout << "Warning: floor exceeded max int value" << endl;
-        }
-      } else if (c == ')') {
-        floor--;
-        closeCount++;
-        if (floor < numeric_limits<int>::min()) {
-          cout << "Warning: floor exceeded min int value" << endl;
+    // Open the input file named "input.txt"
+    ifstream inputFile("santa.txt");
+    // Check if the file is successfully opened
+    if (!inputFile.is_open()) {
+      cerr << "There was an error opening the file" << endl;
+    }
+
+    // Declare a string variable to store each
+    // line of the file
+    string line;
+    long long floor = 0;
+    long long openCount = 0, closeCount = 0;
+
+    // Read each line of the file and print it to the
+    // standard output stream
+    cout << "File content:" << endl;
+    while (getline(inputFile, line)) {
+      cout << line << endl;
+      for (char c : line) {
+        if (c == '(') {
+          floor++;
+          openCount++;
+          if (floor > numeric_limits<int>::max()) {
+            cout << "Warning: floor exceeded max int value" << endl;
+          }
+        } else if (c == ')') {
+          floor--;
+          closeCount++;
+          if (floor < numeric_limits<int>::min()) {
+            cout << "Warning: floor exceeded min int value" << endl;
+          }
         }
       }
     }
-  }
 
-  cout << "Total '(' count: " << openCount << endl;
-  cout << "Total ') count: " << closeCount << endl;
-  cout << "Final floor value: " << floor << endl;
-  inputFile.close();
-  return 0;
+    cout << "Total '(' count: " << openCount << endl;
+    cout << "Total ') count: " << closeCount << endl;
+    cout << "Final floor value: " << floor << endl;
+    inputFile.close();
+  };
+};
+int main(int argc, char *argv[]) {
+  part1 solver;
+  solver.processFile("santa.txt");
+  return 1;
 }
